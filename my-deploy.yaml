@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy
+spec:
+  replocas: 3
+  strategy:
+    type: RollingUpdate
+    maxSurge: 25%
+    maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: my-deploy
+  template:
+    metadata:
+      labels:
+        app: my-deploy
+    spec:
+      containers:
+      - name: nginx
+        image: k8spracticalguide/nginx:1.15.5
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
